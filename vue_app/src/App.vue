@@ -6,26 +6,38 @@
     <router-view></router-view>
      <!--底部导航栏-->
      <nav class="mui-bar mui-bar-tab">
-         <router-link class="mui-tab-item " to="/home">
-             <span class="mui-icon mui-icon-home mui-active" v-if="active==='home'"></span>
-             <span class="mui-icon mui-icon-home" v-else></span>
+         <div @click="ac()">
+         <router-link class="mui-tab-item " to="/home"  >
+             <span class="mui-icon mui-icon-home mui-active" v-show="active==='home'"></span>
+             <span class="mui-icon mui-icon-home" v-show="active!=='home'"></span>
              <span class="mui-tab-label">首页</span>
          </router-link>
-         <router-link class="mui-tab-item " to="/home/Login">
-             <span class="mui-icon mui-icon-contact mui-active" v-if="active==='home/Login'"></span>
-             <span class="mui-icon mui-icon-contact" v-else></span>
-             <span class="mui-tab-label">会员</span>
+         </div>
+         <div @click="ac()">
+         <router-link class="mui-tab-item " to="/home/Login" >
+             <span class="mui-icon mui-icon-contact mui-active" v-show="active==='home/Login'"></span>
+             <span class="mui-icon mui-icon-contact" v-show="active!=='home/Login'"></span>
+             <span class="mui-tab-label" >会员</span>
          </router-link>
+         </div>
+         <div @click="ac()">
          <router-link class="mui-tab-item" to="/shopping">
-             <span class="mui-icon mui-icon-extra mui-icon-extra-cart" >
+             <span class="mui-icon mui-icon-extra mui-icon-extra-cart  mui-active" v-show="active==='shopping'">
+                 <!--调用getters中获取数据的方法-->
+                 <span class="mui-badge">{{$store.getters.optCount}}</span>
+                 </span>
+             <span class="mui-icon mui-icon-extra mui-icon-extra-cart" v-show="active!=='shopping'">
                  <!--调用getters中获取数据的方法-->
                  <span class="mui-badge">{{$store.getters.optCount}}</span></span>
              <span class="mui-tab-label">购物车</span>
          </router-link>
+         </div>
+         <div @click="ac()">
          <a class="mui-tab-item" href="#">
-             <span class="mui-icon  mui-icon-search"></span>
+             <span class="mui-icon  mui-icon-search" ></span>
              <span class="mui-tab-label">搜索</span>
          </a>
+         </div>
      </nav>
  </div>
 </template>
@@ -34,16 +46,26 @@
     export default {
         data(){
             return {
-                active:'',
+                active:''
             }
         },
         mounted(){
-            this.active = this.$route.path.slice(1);
+            this.ac()
+        },
+        methods:{
+            //触发事件，获取路径
+            ac(){
+                this.active=this.$route.path.slice(1)
+            }
         }
     }
 </script>
 
 <style>
+    nav.mui-bar.mui-bar-tab{
+        display: flex;
+        justify-content: space-around;
+    }
    .app-container{
      padding-top:40px;
      padding-bottom:50px;
