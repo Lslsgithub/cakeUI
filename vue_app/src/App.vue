@@ -24,7 +24,7 @@
          <router-link class="mui-tab-item" to="/shopping">
              <span class="mui-icon mui-icon-extra mui-icon-extra-cart  mui-active" v-show="active==='shopping'">
                  <!--调用getters中获取数据的方法-->
-                 <span class="mui-badge">{{$store.getters.optCount}}</span>
+                 <span class="mui-badge iconShow">{{$store.getters.optCount}}</span>
                  </span>
              <span class="mui-icon mui-icon-extra mui-icon-extra-cart" v-show="active!=='shopping'">
                  <!--调用getters中获取数据的方法-->
@@ -63,19 +63,19 @@
 </script>
 
 <style>
-    nav.mui-bar.mui-bar-tab{
-        display: flex;
-        justify-content: space-around;
-    }
-   .app-container{
-     padding-top:40px;
-     padding-bottom:50px;
-     overflow-x:hidden;
-   }
-
- .mui-bar-tab .mui-tab-item-tao.mui-active {
+/*设置底部tabbar的显示*/
+nav.mui-bar.mui-bar-tab{
+    display: flex;
+    justify-content: space-around;
+}
+.app-container{
+    padding-top:40px;
+    padding-bottom:50px;
+    overflow-x:hidden;
+}
+.mui-bar-tab .mui-tab-item-tao.mui-active {
     color: #007aff;
- }
+}
 .mui-bar-tab .mui-tab-item-tao {
     display: table-cell;
     overflow: hidden;
@@ -94,7 +94,6 @@
     padding-top: 0;
     padding-bottom: 0;
 }
-
 .mui-bar-tab .mui-tab-item-tao .mui-icon~.mui-tab-label {
    font-size:11px;
    display:block;

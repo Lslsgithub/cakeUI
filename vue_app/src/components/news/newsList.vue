@@ -5,10 +5,11 @@
                 <router-link :to="'/home/newsInfo?id='+item.id">
                     <img class="mui-media-object mui-pull-left" :src="item.img_url">
                     <div class="mui-media-body" >
-                      {{item.title}}
+                        <P class="titleHidden">{{item.title}}</P>
                         <p class='mui-ellipsis'>
                             <span>{{item.ctime | dataFilter}}</span>
-                            <span>点击&nbsp;&nbsp;{{item.point}}&nbsp;&nbsp;次</span></p>
+                            <span>点击&nbsp;&nbsp;{{item.point}}&nbsp;&nbsp;次</span>
+                        </p>
                     </div>
                 </router-link>
             </li>
@@ -55,5 +56,11 @@ p.mui-ellipsis{
     font-size: 12px;
     color: #0aa1ed;
 }
-
+/*新闻title超出部分用...代替*/
+.titleHidden{
+    width: 100px; /*设置文本显示框的宽度*/
+    white-space:nowrap; /*设置不换行*/
+    overflow:hidden ;  /*超出部分隐藏*/
+    text-overflow:ellipsis ;  /*文本超出部分用...代替*/
+}
 </style>
