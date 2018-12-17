@@ -33,10 +33,11 @@
          </router-link>
          </div>
          <div @click="ac()">
-         <a class="mui-tab-item" href="#">
-             <span class="mui-icon  mui-icon-search" ></span>
+         <router-link class="mui-tab-item" to="/notFound">
+             <span class="mui-icon  mui-icon-search mui-active" v-show="active==='notFound'"></span>
+             <span class="mui-icon  mui-icon-search" v-show="active!=='notFound'"></span>
              <span class="mui-tab-label">搜索</span>
-         </a>
+         </router-link>
          </div>
      </nav>
  </div>
