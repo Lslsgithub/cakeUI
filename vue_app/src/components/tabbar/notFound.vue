@@ -19,6 +19,7 @@
             var timer=setInterval(()=>{
                 --this.i || clearInterval(timer)
             },1000)
+
         }
     }
 </script>

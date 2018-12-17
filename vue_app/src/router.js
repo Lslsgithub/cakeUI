@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue"
+import Router from "vue-router"
 
 //引入自定义组件
 import homeContainer from "./components/tabbar/homeContainer.vue"

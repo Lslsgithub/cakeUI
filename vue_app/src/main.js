@@ -1,6 +1,6 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
+import Vue from "vue"
+import App from "./App.vue"
+import router from "./router"
 
 //单个引入mintui库的组件————按需引入
 //1.引入组件mintui库的组件
@@ -18,15 +18,15 @@ import MintUI from "mint-ui"
 Vue.use(MintUI)
 
 //发送ajax请求的组件————全部引入
-import VueResource  from 'vue-resource'
+import VueResource  from "vue-resource"
 Vue.use(VueResource)
 
-import'mint-ui/lib/style.css'
+import"mint-ui/lib/style.css"
 Vue.config.productionTip = false
 
 //加载mui的css文件
-import './lib/mui/css/mui.css'
-import './lib/mui/css/icons-extra.css'
+import "./lib/mui/css/mui.css"
+import "./lib/mui/css/icons-extra.css"
 
 //定义过滤器————转换时间格式
 Vue.filter("dataFilter",function (val) {
@@ -48,7 +48,7 @@ Vue.http.options.root="http://127.0.0.1:3000/"
 
 /*创建Vuex的实例对象*/
 /*1.引入Vuex*/
-import Vuex from 'vuex'
+import Vuex from "vuex"
 /*2.注册组件*/
 Vue.use(Vuex)
 /*3.创建Vuex的实例对象*/
@@ -82,4 +82,4 @@ new Vue({
   render: h => h(App),
 /*4.将Vuex注册到Vue的实例对象中*/
   store
-}).$mount('#app')
+}).$mount("#app")

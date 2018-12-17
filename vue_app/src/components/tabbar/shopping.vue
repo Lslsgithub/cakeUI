@@ -47,7 +47,7 @@
 
 <script>
     /*引入子组件*/
-    import swiper from '../sub/swiper.vue'
+    import swiper from "../sub/swiper.vue"
     export default {
         data(){
             return{

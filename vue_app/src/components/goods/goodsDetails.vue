@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="mui-card-footer">
-                <mt-button type="primary">立即购买</mt-button>
+                <mt-button type="primary" @click="pay()">立即购买</mt-button>
                 <mt-button @click="addCart()">加入购物车</mt-button>
             </div>
         </div>
@@ -40,8 +40,8 @@
                 </div>
             </div>
             <div class="mui-card-footer">
-                <mt-button>图文介绍</mt-button>
-                <mt-button >商品评论</mt-button>
+                <mt-button @click="pay()">图文介绍</mt-button>
+                <mt-button @click="pay()">商品评论</mt-button>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
 
 <script>
     /*1.引入swiper组件*/
-    import swiper from '../sub/swiper.vue'
+    import swiper from "../sub/swiper.vue"
     /*局部引入mint-ui组件*/
     import {Toast} from "mint-ui"
     export default {
@@ -105,6 +105,10 @@
                             Toast(res.body.msg)
                         }
                     })
+            },
+            /*立即购买*/
+            pay(){
+                this.$router.push('/notFound')
             }
         },
         created() {
