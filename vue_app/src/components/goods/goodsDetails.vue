@@ -111,6 +111,7 @@
                 this.$router.push('/notFound')
             }
         },
+        //钩子函数——此时数据已经初始化
         created() {
             this.id=this.$route.query.id //传入的参数值————商品编号
             this.getImage() //轮播图

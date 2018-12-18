@@ -21,9 +21,9 @@
                 </a>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                <a href="#">
-                    <img src="../../img/menu3.png"/>
-                    <div class="mui-media-body">点餐</div>
+                <a @click="jumpSearch()">
+                    <img src="../../img/menu5.png"/>
+                    <div class="mui-media-body">Search</div>
                 </a>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
@@ -34,8 +34,8 @@
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                 <a href="#">
-                    <img src="../../img/menu5.png"/>
-                    <div class="mui-media-body">Search</div>
+                    <img src="../../img/menu3.png"/>
+                    <div class="mui-media-body">点餐</div>
                 </a>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
@@ -70,6 +70,9 @@
                 },
             jumpPay(){
                 this.$router.push("/home/PhotoContainer")
+            },
+            jumpSearch(){
+                this.$router.push("/search")
             }
         },
         created(){

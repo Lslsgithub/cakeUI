@@ -12,6 +12,7 @@ import  PhotoContainer from "./components/photo/PhotoContainer.vue"
 import Login from "./components/tabbar/LoginContainer.vue"
 import register from "./components/tabbar/register.vue"
 import notFount from "./components/tabbar/notFound.vue"
+import search from './components/search/search.vue'
 Vue.use(Router)
 
 //配置组件访问路径
@@ -30,6 +31,7 @@ export default new Router({
     {path:'/home/PhotoContainer',component:PhotoContainer},
     {path:'/home/Login',component:Login},
     {path:'/home/register',component:register},
-    {path:'/notFound',component:notFount}
+    {path:'/notFound',component:notFount},
+      {path:'/search',component:search}
   ]
 })
