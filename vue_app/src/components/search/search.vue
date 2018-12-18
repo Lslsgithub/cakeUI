@@ -1,7 +1,7 @@
 <template>
     <div id="app-search">
         <div class="mui-input-row mui-input-search">
-            <input type="search" class="mui-input-clear" placeholder="" v-model="sc">
+            <input type="search" class="mui-input-clear" placeholder="" v-model="sc" @keyup.13="searchClick()">
             <button @click="searchClick()" class="btn_search">搜索</button>
         </div>
         <div class="goodsList">
