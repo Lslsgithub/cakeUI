@@ -21,27 +21,27 @@
                 </a>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                <a @click="jumpSearch()">
-                    <img src="../../img/menu5.png"/>
-                    <div class="mui-media-body">Search</div>
+                <a @click.stop.prevent="jumpSearch()">
+                    <img src="../../img/search.png"/>
+                    <div class="mui-media-body">搜索</div>
                 </a>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                 <a @click.stop.prevent="jumpPay()">
-                    <img src="../../img/menu4.png"/>
+                    <img src="../../img/new.jpg"/>
                     <div class="mui-media-body">新品</div>
                 </a>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                <a href="#">
+                <a @click.stop.prevent=" jumpNotFound()">
                     <img src="../../img/menu3.png"/>
                     <div class="mui-media-body">点餐</div>
                 </a>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                 <a href="#">
-                    <img src="../../img/menu2.png"/>
-                    <div class="mui-media-body">Phone</div>
+                    <img src="../../img/service.jpg"/>
+                    <div class="mui-media-body">联系我们</div>
                 </a>
             </li>
         </ul>
@@ -73,6 +73,9 @@
             },
             jumpSearch(){
                 this.$router.push("/search")
+            },
+            jumpNotFound(){
+                    this.$router.push('/notFound')
             }
         },
         created(){

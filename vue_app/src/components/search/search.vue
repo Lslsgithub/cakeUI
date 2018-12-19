@@ -4,7 +4,7 @@
             <input type="search" class="mui-input-clear" placeholder="" v-model="sc" @keyup.13="searchClick()">
             <button @click="searchClick()" class="btn_search">搜索</button>
         </div>
-        <div class="goodsList">
+        <div class="goodsList" v-show="list">
             <div class="goods-item" v-for="item in list" :key="item.id">
                 <a @click="getDetails(item.id)">
                     <img :src="item.img_url"/>
@@ -12,7 +12,7 @@
                 <h3 class="title">{{item.cname}}</h3>
                 <div class="info">
                     <p class="price">
-                        <span class="new">￥150}</span>
+                        <span class="new">￥150</span>
                         <span class="old"><s>￥300</s></span>
                     </p>
                     <p class="sell">
@@ -22,22 +22,32 @@
                 </div>
             </div>
         </div>
+        <div class="sc-img" v-show="!list">
+            <img src="http://127.0.0.1:3000/img/search.png"/>
+        </div>
     </div>
 </template>
 
 <script>
+    /*引入提示框*/
+    import {Toast} from 'mint-ui'
     export default {
         data(){
             return{
                 sc:"",
-                list:[]
+                list:""
             }
         },
         methods:{
             searchClick(){
                 this.$http.get("http://127.0.0.1:3000/search?sc="+this.sc)
                     .then(res=>{
-                        this.list=res.data
+                        if(res.data.length>0){
+                            this.list=res.data
+                        }else{
+                            this.list=0
+                            Toast("没有此项商品")
+                        }
                     })
 
             },
@@ -87,5 +97,15 @@
     color: grey;
     font-size: 12px;
     margin-left: 10px;
+}
+/*图片*/
+.sc-img{
+    width: 200px;
+    height: 200px;
+    margin: 40% auto;
+}
+.sc-img img{
+    width: 100%;
+    height: 100%;
 }
 </style>

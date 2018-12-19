@@ -32,6 +32,6 @@ export default new Router({
     {path:'/home/Login',component:Login},
     {path:'/home/register',component:register},
     {path:'/notFound',component:notFount},
-      {path:'/search',component:search}
+    {path:'/search',component:search}
   ]
 })
