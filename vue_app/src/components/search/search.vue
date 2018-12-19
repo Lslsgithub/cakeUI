@@ -1,7 +1,9 @@
 <template>
     <div id="app-search">
         <div class="mui-input-row mui-input-search">
-            <input type="search" class="mui-input-clear" placeholder="" v-model="sc" @keyup.13="searchClick()">
+            <input type="search" class="mui-input-clear" placeholder=""
+                   v-model="sc" @keyup.13="searchClick()" @input="search()" v-focus>
+
             <button @click="searchClick()" class="btn_search">搜索</button>
         </div>
         <div class="goodsList" v-show="list">
@@ -30,7 +32,7 @@
 
 <script>
     /*引入提示框*/
-    import {Toast} from 'mint-ui'
+    import {Toast,Indicator} from 'mint-ui'
     export default {
         data(){
             return{
@@ -39,18 +41,39 @@
             }
         },
         methods:{
+            //根据输入的值，发送请求查询数据
             searchClick(){
+                //加载提示框
+                Indicator.open({
+                    text: '加载中...',
+                    spinnerType: 'fading-circle'
+                });
                 this.$http.get("http://127.0.0.1:3000/search?sc="+this.sc)
                     .then(res=>{
+                        Indicator.close()
                         if(res.data.length>0){
                             this.list=res.data
                         }else{
-                            this.list=0
-                            Toast("没有此项商品")
+                            this.list=0 //清空页面商品列表
+                            Toast({
+                                message: '没有此项商品',
+                                position: 'center',
+                                duration: 1500
+                            });
                         }
                     })
-
             },
+            //输入时触发
+            search(){
+                //输入框有值时才触发
+                //this.sc && this.searchClick()
+                if(!this.sc){
+                    this.list=""
+                }else{
+                    this.searchClick()
+                }
+            },
+            //点击商品，跳转详情页
             getDetails(id){
                 this.$router.push("/home/goodsDetails?id="+id)
             }

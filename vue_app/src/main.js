@@ -76,6 +76,12 @@ var store=new Vuex.Store({
     }
 });
 
+/*创建自定义指令--自动获取焦点*/
+Vue.directive('focus', {
+    inserted: function (el) {
+        el.focus()
+    }
+});
 
 new Vue({
   router,
