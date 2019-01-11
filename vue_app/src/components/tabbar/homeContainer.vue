@@ -41,7 +41,7 @@
                 </a>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                <a @click.stop.prevent=" jumpNotFound()">
+                <a @click.stop.prevent=" jumpNotFound()" >
                     <img src="../../img/service.jpg"/>
                     <div class="mui-media-body">联系我们</div>
                 </a>
@@ -100,5 +100,9 @@
     .app-container .mui-grid-view.mui-grid-9 img{
         width: 60px;
         height: 60px;
+    }
+    .mui-grid-view.mui-grid-9 .mui-table-view-cell{
+        border-right:1px solid #ccc;
+        border-bottom: 1px solid #ccc;
     }
 </style>
