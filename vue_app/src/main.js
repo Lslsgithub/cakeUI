@@ -58,7 +58,7 @@ var store=new Vuex.Store({
     mutations:{
       /*可增加一个参数————控制增加的数量*/
       add(state,c){ //state参数共享的数据
-        if(state.count==999)
+          if(state.count==999)
           return
           state.count+=c
       },

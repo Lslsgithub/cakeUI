@@ -44,8 +44,8 @@
         methods: {
             //根据输入的值，发送请求查询数据
             searchClick() {
-                if(!this.sc.trim()){ //去掉空格后，搜索框无值时终止函数
-                    return
+                if(!this.sc.trim()){ //去掉空格
+                    return //搜索框无值时终止函数
                 }
                 //加载提示框
                 Indicator.open({
