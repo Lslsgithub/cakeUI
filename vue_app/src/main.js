@@ -53,7 +53,10 @@ import Vuex from "vuex"
 Vue.use(Vuex)
 /*3.创建Vuex的实例对象*/
 var store=new Vuex.Store({
-    state:{count:0}, //保存共享数据————购物车中商品的数量
+    state:{
+        count:0 ,//保存共享数据————购物车中商品的数量
+        isLogin:false //保存登录状态
+    },
     //修改数据
     mutations:{
       /*可增加一个参数————控制增加的数量*/
@@ -66,12 +69,18 @@ var store=new Vuex.Store({
           if(state.count==1)
               return
           state.count--
+      },
+      loginState(){ //登录成功修改登录状态
+          this.state.isLogin=true
       }
     },
     //获取数据
     getters:{
       optCount(state){
-        return state.count //返回共享的数据
+        return state.count //返回共享的数据——购物车中数量
+      },
+      isLogin(state){
+          return state.isLogin //登录状态
       }
     }
 });

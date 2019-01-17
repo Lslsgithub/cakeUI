@@ -48,6 +48,7 @@
 <script>
     /*引入子组件*/
     import swiper from "../sub/swiper.vue"
+    import {Toast} from "mint-ui"
     export default {
         data(){
             return{
@@ -91,6 +92,18 @@
                     }
                 }
             },
+            isLogin() {//验证是否登录
+                var state=this.$store.getters.isLogin //获取vuex中的登录状态
+                if(state){
+                    this.getShopping()
+                }else{
+                    Toast({
+                        message: '您还未登录，无法加载购物车',
+                        position: 'center',
+                        duration: 1500
+                    })
+                }
+            }
         },
         computed:{
             /*合计*/
@@ -104,7 +117,7 @@
         },
         created(){
             this.getImage()
-            this.getShopping()
+            this.isLogin()
         },
         /*注册子组件*/
         components:{

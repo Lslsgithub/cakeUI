@@ -33,6 +33,7 @@
                     .then(res=>{
                         if(res.body.code===1){
                             Toast(res.body.msg)
+                            this.$store.commit('loginState') //登录成功，修改登录状态
                         }else{
                             Toast(res.body.msg)
                         }
