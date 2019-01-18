@@ -18,9 +18,9 @@
                     <ul class="mui-table-view">
                         <li class="mui-table-view-cell mui-media" v-for="item in shop">
                             <a href="javascript:;">
-                                <img class="mui-media-object mui-pull-left" src="">
+                                <img class="mui-media-object mui-pull-left" :src="item.imgUrl">
                                 <div class="mui-media-body">
-                                    {{item.title}}
+                                    {{item.pname}}
                                     <p class='mui-ellipsis'>
                                         <span class="price">￥{{item.price}}</span>
                                         <span class="count">
@@ -66,9 +66,10 @@
             },
             /*购物车信息*/
            getShopping(){
-                this.$http.get("shop")
+                this.$http.get("shop?uid="+1)
                     .then(res=>{
                         this.shop=res.body
+                        console.log(this.shop)
                     })
             },
             /*数量*/
