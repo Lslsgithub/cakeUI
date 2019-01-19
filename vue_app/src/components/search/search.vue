@@ -7,19 +7,19 @@
             <button @click="searchClick()" class="btn_search">搜索</button>
         </div>
         <div class="goodsList" v-show="list">
-            <div class="goods-item" v-for="item in list" :key="item.id">
-                <a @click="getDetails(item.id)">
+            <div class="goods-item" v-for="item in list" :key="item.pid">
+                <a @click="getDetails(item.pid)">
                     <img :src="item.img_url"/>
                 </a>
-                <h3 class="title">{{item.cname}}</h3>
+                <h3 class="title">{{item.pname}}</h3>
                 <div class="info">
                     <p class="price">
-                        <span class="new">￥150</span>
-                        <span class="old"><s>￥300</s></span>
+                        <span class="new">￥{{item.newPrice}}</span>
+                        <span class="old"><s>￥{{item.oldPrice}}</s></span>
                     </p>
                     <p class="sell">
                         <span>热卖中</span>
-                        <span>剩 10 件</span>
+                        <span>剩{{item.count}}</span>
                     </p>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                     text: '加载中...',
                     spinnerType: 'fading-circle'
                 });
-                this.$http.get("http://127.0.0.1:3000/search?sc=" + this.sc)
+                this.$http.get("search?sc=" + this.sc)
                     .then(res => {
                         Indicator.close()
                             if (res.data.length > 0) {

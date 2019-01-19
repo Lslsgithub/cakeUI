@@ -1,14 +1,14 @@
 <template>
     <div class="app-goodsList">
-        <div class="goods-item" v-for="item in list" :key="item.id">
-            <a @click="getDetails(item.id)">
+        <div class="goods-item" v-for="item in list" :key="item.pid">
+            <a @click="getDetails(item.pid)">
                 <img :src="item.img_url"/>
             </a>
-                <h3 class="title">{{item.title}}</h3>
+                <h3 class="title">{{item.pname}}</h3>
             <div class="info">
                 <p class="price">
-                    <span class="new">￥{{item.new_price}}</span>
-                    <span class="old"><s>￥{{item.old_price}}</s></span>
+                    <span class="new">￥{{item.newPrice}}</span>
+                    <span class="old"><s>￥{{item.oldPrice}}</s></span>
                 </p>
                 <p class="sell">
                     <span>热卖中</span>
@@ -22,18 +22,22 @@
     export default {
         data(){
             return {
-                list:[ {id:1,img_url:"http://127.0.0.1:3000/img/cake1.jpg",title:"蓝莓拿破仑蛋糕",new_price:198,old_price:300,count:50},
-                    {id:2,img_url:"http://127.0.0.1:3000/img/cake2.jpg",title:"数字蛋糕",new_price:198,old_price:300,count:50},
-                    {id:3,img_url:"http://127.0.0.1:3000/img/cake3.jpg",title:"雪精灵蛋糕",new_price:198,old_price:300,count:50},
-                    {id:4,img_url:"http://127.0.0.1:3000/img/cake4.jpg",title:"粉红玫瑰森林蛋糕",new_price:198,old_price:300,count:50},
-                    {id:5,img_url:"http://127.0.0.1:3000/img/cake5.jpg",title:"阿尔蒙麦香蛋糕",new_price:198,old_price:300,count:50},
-                    {id:6,img_url:"http://127.0.0.1:3000/img/cake6.jpg",title:"牛乳蓝莓雪域双拼蛋糕",new_price:198,old_price:300,count:50}]
+                list:[]
             }
         },
         methods:{
-            getDetails(id){
-                this.$router.push("/home/goodsDetails?id="+id)
+            getDetails(pid){ //跳转详情页
+                this.$router.push("/home/goodsDetails?pid="+pid)
+            },
+            getList(){
+                this.$http.get("productList")
+                    .then(res=>{
+                        this.list=res.body
+                    })
             }
+        },
+        created(){
+            this.getList()
         }
     }
 </script>

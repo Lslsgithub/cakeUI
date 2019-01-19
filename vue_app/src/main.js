@@ -55,7 +55,8 @@ Vue.use(Vuex)
 var store=new Vuex.Store({
     state:{
         count:0 ,//保存共享数据————购物车中商品的数量
-        isLogin:false //保存登录状态
+        isLogin:false ,//保存登录状态
+        uid:"" //保存用户id
     },
     //修改数据
     mutations:{
@@ -70,8 +71,9 @@ var store=new Vuex.Store({
               return
           state.count--
       },
-      loginState(){ //登录成功修改登录状态
-          this.state.isLogin=true
+      loginState(state,uid){ //登录成功修改登录状态,uid
+          state.isLogin=true
+          state.uid=uid
       }
     },
     //获取数据
@@ -80,7 +82,10 @@ var store=new Vuex.Store({
         return state.count //返回共享的数据——购物车中数量
       },
       isLogin(state){
-          return state.isLogin //登录状态
+          return state.isLogin //获取登录状态
+      },
+      uid(state){
+          return state.uid //获取用户id
       }
     }
 });

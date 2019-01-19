@@ -11,16 +11,16 @@
         </div>
         <!--购买区域-->
         <div class="mui-card">
-            <div class="mui-card-header">{{goods.title}}</div>
+            <div class="mui-card-header">{{goods.pname}}</div>
             <div class="mui-card-content">
                 <div class="mui-card-content-inner">
                     <p class="price"></p>
-                    市场价：<s>￥{{goods.old}}</s>
-                    销售价：<span class="now">￥{{goods.now}}</span>
+                    市场价：<s>￥{{goods.oldPrice}}</s>
+                    销售价：<span class="now">￥{{goods.newPrice}}</span>
                     <p class="content">购买数量:</p>
                     <div class="mui-numbox" data-numbox-min='1' data-numbox-max='999'>
-                        <button class="mui-btn mui-btn-numbox-minus" type="button" @click="goodSub()" >-</button>
-                        <input id="test" class="mui-input-numbox" type="number"  v-model="count"/>
+                        <button class="mui-btn mui-btn-numbox-minus" type="button" @click="goodSub()">-</button>
+                        <input id="test" class="mui-input-numbox" type="number" v-model="count"/>
                         <button class="mui-btn mui-btn-numbox-plus" type="button" @click="goodsAdd()">+</button>
                     </div>
                 </div>
@@ -35,8 +35,8 @@
             <div class="mui-card-header">商品参数</div>
             <div class="mui-card-content">
                 <div class="mui-card-content-inner">
-                    <p>商品货号：{{goods.goodSid}}</p>
-                    <p>商品运费：50</p>
+                    <p>商品货号：12121212</p>
+                    <p>商品运费：￥50</p>
                 </div>
             </div>
             <div class="mui-card-footer">
@@ -52,20 +52,21 @@
     import swiper from "../sub/swiper.vue"
     /*局部引入mint-ui组件*/
     import {Toast} from "mint-ui"
+
     export default {
         data() {
             return {
                 /*轮播图列表*/
-                list:[],
+                list: [],
                 /*商品数量*/
-                count:1,
+                count: 1,
                 /*正在浏览的商品id*/
-                id:"",
+                pid: "",
                 /*正在浏览的商品详情*/
-                goods:{}
+                goods: {}
             }
         },
-        methods:{
+        methods: {
             /*轮播图*/
             getImage() {
                 this.$http.get("imagelist")
@@ -74,58 +75,67 @@
                     })
             },
             /*商品详情*/
-            getGoods(){
-                this.$http.get("goodsDetails?id="+this.id)
-                    .then(res=>{
-                        this.goods=res.body
+            getGoods() {
+                this.$http.get("goodsDetails?pid=" + this.pid)
+                    .then(res => {
+                        this.goods = res.body[0]
                     })
             },
-            goodSub(){
-                if(this.count==1)
+            goodSub() {
+                if (this.count == 1)
                     return
                 this.count--
             },
-            goodsAdd(){
-                if(this.count==999)
+            goodsAdd() {
+                if (this.count == 999)
                     return
                 this.count++
             },
             /*加入购物车*/
-            addCart(){
-                /*console.log(this.id,this.count)*/
-                this.$http.get("addCart?id="+this.id+"&count="+this.count)
-                    .then(res=>{
-                        if(res.body.code == 1){
-                       /*更新购物车商品的数量*/
-                       //实质——修改Vuex中的共享数据
-                       //调用mutations中修改数据的方法——可增加一个参数
-                        this.$store.commit('add',this.count)
-                            Toast(res.body.msg)
-                        }else{
-                            Toast(res.body.msg)
-                        }
+            addCart() {
+                if (this.$store.getters.isLogin) {
+                    var uid = this.$store.getters.uid //获取用户id
+                    var url=`addCart?pid=${this.pid}&uid=${uid}&imgUrl=${this.goods.img_url}&pname=${this.goods.pname}&price=${this.goods.newPrice}&count=${this.count}`
+                    this.$http.get(url)
+                        .then(res => {
+                            if (res.body.code == 1) {
+                                /*更新购物车商品的数量*/
+                                //实质——修改Vuex中的共享数据
+                                //调用mutations中修改数据的方法——可增加一个参数
+                                this.$store.commit('add', this.count)
+                                Toast(res.body.msg)
+                            } else {
+                                Toast(res.body.msg)
+                            }
+                        })
+                }else{
+                    Toast({
+                        message: '您还未登录，无法加入购物车',
+                        position: 'center',
+                        duration: 1500
                     })
+                }
             },
             /*立即购买*/
-            pay(){
+            pay() {
                 this.$router.push('/notFound')
             }
         },
         //钩子函数——此时数据已经初始化
         created() {
-            this.id=this.$route.query.id //传入的参数值————商品编号
+            this.pid = this.$route.query.pid //传入的参数值————商品编号
             this.getImage() //轮播图
-            this.getGoods()  //商品信息
+            this.getGoods()  //商品详情
         },
-    /*2.注册组件————子组件加入到父组件中*/
-        components:{
-            "swiper-box":swiper
+        /*2.注册组件————子组件加入到父组件中*/
+        components: {
+            "swiper-box": swiper
         }
     }
 </script>
 
 <style scoped>
-    .now{
+    .now {
         color: red;
         font-size: 16px;
         font-weight: bold;

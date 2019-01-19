@@ -25,9 +25,12 @@
                                         <span class="price">￥{{item.price}}</span>
                                         <span class="count">
                                             <div class="mui-numbox" data-numbox-min='1' data-numbox-max='999'>
-                                                <button class="mui-btn mui-btn-numbox-minus" type="button" @click="goodSub(item.id)">-</button>
-                                                <input id="test" class="mui-input-numbox" type="number"   :value="item.count"/>
-                                                <button class="mui-btn mui-btn-numbox-plus" type="button" @click="goodsAdd(item.id)">+</button>
+                                                <button class="mui-btn mui-btn-numbox-minus" type="button"
+                                                        @click="goodSub(item.cid)">-</button>
+                                                <input id="test" class="mui-input-numbox" type="number"
+                                                       :value="item.count"/>
+                                                <button class="mui-btn mui-btn-numbox-plus" type="button"
+                                                        @click="goodsAdd(item.cid)">+</button>
                                             </div>
                                         </span>
                                     </p>
@@ -49,11 +52,12 @@
     /*引入子组件*/
     import swiper from "../sub/swiper.vue"
     import {Toast} from "mint-ui"
+
     export default {
-        data(){
-            return{
-                list:[],
-                shop:[],
+        data() {
+            return {
+                list: [],//banner图
+                shop: [],//购物车列表
             }
         },
         methods: {
@@ -65,39 +69,42 @@
                     })
             },
             /*购物车信息*/
-           getShopping(){
-                this.$http.get("shop?uid="+1)
-                    .then(res=>{
-                        this.shop=res.body
-                        console.log(this.shop)
+            getShopping() {
+                this.$http.get("shop?uid=" + 1)
+                    .then(res => {
+                        this.shop = res.body
                     })
             },
             /*数量*/
-            goodSub(id){
-                for(var i of this.shop) {
-                    if(id==i.id){
-                        if(i.count==1)
+            goodSub(id) {
+                for (var i of this.shop) {
+                    if (id == i.cid) {
+                        if (i.count == 1) {
                             return
-                        i.count--
-                        break
+                        } else {
+                            i.count--
+                            break
+                        }
                     }
                 }
             },
-            goodsAdd(id){
-                for(var i of this.shop) {
-                    if(id==i.id){
-                        if(i.count==999)
+            goodsAdd(id) {
+                for (var i of this.shop) {
+                    if (id == i.cid) {
+                        if (i.count == 999) {
                             return
-                        i.count++
-                        break
+                        } else {
+                            i.count++
+                            break
+                        }
                     }
                 }
             },
             isLogin() {//验证是否登录
-                var state=this.$store.getters.isLogin //获取vuex中的登录状态
-                if(state){
+                var state = this.$store.getters.isLogin //获取vuex中的登录状态
+                if (state) {
                     this.getShopping()
-                }else{
+                } else {
                     Toast({
                         message: '您还未登录，无法加载购物车',
                         position: 'center',
@@ -106,29 +113,29 @@
                 }
             }
         },
-        computed:{
+        computed: {
             /*合计*/
-           total(){
-               var sum=0
-               for(var i of this.shop) {
-                    sum+=i.price * i.count;
-               }
-               return sum
-           }
+            total() {
+                var sum = 0
+                for (var i of this.shop) {
+                    sum += i.price * i.count;
+                }
+                return sum
+            }
         },
-        created(){
+        created() {
             this.getImage()
             this.isLogin()
         },
         /*注册子组件*/
-        components:{
-            "swiper-box":swiper
+        components: {
+            "swiper-box": swiper
         }
     }
 </script>
 
 <style scoped>
-    .mui-ellipsis{
+    .mui-ellipsis {
         display: flex;
         justify-content: space-between;
     }

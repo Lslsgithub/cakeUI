@@ -31,9 +31,9 @@
                     upwd:this.upwd
                 })
                     .then(res=>{
-                        if(res.body.code===1){
-                            Toast(res.body.msg)
-                            this.$store.commit('loginState') //登录成功，修改登录状态
+                       if(res.body[1].code===1){
+                            Toast(res.body[1].msg)
+                            this.$store.commit('loginState',res.body[0].uid) //登录成功，修改登录状态,uid
                         }else{
                             Toast(res.body.msg)
                         }
