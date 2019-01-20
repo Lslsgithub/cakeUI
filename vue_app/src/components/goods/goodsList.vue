@@ -12,7 +12,7 @@
                 </p>
                 <p class="sell">
                     <span>热卖中</span>
-                    <span>剩 {{item.count}} 件</span>
+                    <span>剩 {{item.pcount}} 件</span>
                 </p>
             </div>
         </div>

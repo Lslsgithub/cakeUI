@@ -78,8 +78,8 @@
                 }
             },
             //点击商品，跳转详情页
-            getDetails(id) {
-                this.$router.push("/home/goodsDetails?id=" + id)
+            getDetails(pid) {
+                this.$router.push("/home/goodsDetails?pid=" + pid)
             }
         }
     }

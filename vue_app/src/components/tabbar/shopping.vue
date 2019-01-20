@@ -70,33 +70,51 @@
             },
             /*购物车信息*/
             getShopping() {
-                this.$http.get("shop?uid=" + 1)
+                var uid=this.$store.getters.uid
+                this.$http.get("shop?uid=" + uid)
                     .then(res => {
                         this.shop = res.body
                     })
             },
-            /*数量*/
-            goodSub(id) {
-                for (var i of this.shop) {
-                    if (id == i.cid) {
-                        if (i.count == 1) {
+            updateCart(pid,uid,count){
+                this.$http.get("updateCart?pid="+pid+"&uid="+uid+"&count="+count)
+                    .then(res=>{
+                        if(res.body.code==0){
+                            Toast({
+                                message:res.body.msg,
+                                position:'center',
+                                duration:1500
+                            })
+                            this.getShopping()
+                        } else if(res.body.code==1){
                             return
-                        } else {
-                            i.count--
-                            break
+                        }else{
+                            Toast({
+                                message:res.body.msg,
+                                position:'center',
+                                duration:1500
+                            })
                         }
+                    })
+            },
+            /*数量*/
+            goodSub(cid) {
+                var uid=this.$store.getters.uid
+                for (var i of this.shop) {
+                    if (cid == i.cid) {
+                            i.count--
+                            this.updateCart(i.pid,uid,i.count)
+                        break
                     }
                 }
             },
-            goodsAdd(id) {
+            goodsAdd(cid) {
+                var uid=this.$store.getters.uid
                 for (var i of this.shop) {
-                    if (id == i.cid) {
-                        if (i.count == 999) {
-                            return
-                        } else {
+                    if (cid == i.cid) {
                             i.count++
+                        this.updateCart(i.pid,uid,i.count)
                             break
-                        }
                     }
                 }
             },

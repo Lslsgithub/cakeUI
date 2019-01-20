@@ -104,7 +104,9 @@
                                 //调用mutations中修改数据的方法——可增加一个参数
                                 this.$store.commit('add', this.count)
                                 Toast(res.body.msg)
-                            } else {
+                            } else if(res.body.code==-1) {
+                                Toast(res.body.msg)
+                            }else{
                                 Toast(res.body.msg)
                             }
                         })
