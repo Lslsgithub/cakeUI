@@ -56,8 +56,9 @@
     export default {
         data() {
             return {
-                list: [],//banner图
+                list: [],//banner图列表
                 shop: [],//购物车列表
+                timer:"" ,//定时器
             }
         },
         methods: {
@@ -68,9 +69,9 @@
                         this.list = res.body
                     })
             },
-            /*购物车信息*/
+            /*加载购物车*/
             getShopping() {
-                var uid=this.$store.getters.uid
+                var uid=this.$store.getters.uid //获取uid
                 this.$http.get("shop?uid=" + uid)
                     .then(res => {
                         this.shop = res.body
@@ -124,10 +125,13 @@
                     this.getShopping()
                 } else {
                     Toast({
-                        message: '您还未登录，无法加载购物车',
+                        message: '您还未登录，无法加载购物车,即将加载登录页面',
                         position: 'center',
-                        duration: 1500
+                        duration: 2000
                     })
+                    this.timer=setTimeout(()=>{
+                        this.$router.push('/home/Login?path=/shopping')
+                    },2000)
                 }
             }
         },
@@ -144,6 +148,9 @@
         created() {
             this.getImage()
             this.isLogin()
+        },
+        destroyed(){ //关闭页面时，清除定时器
+            clearTimeout(this.timer)
         },
         /*注册子组件*/
         components: {

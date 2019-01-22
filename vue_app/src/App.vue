@@ -24,11 +24,11 @@
          <router-link class="mui-tab-item" to="/shopping">
              <span class="mui-icon mui-icon-extra mui-icon-extra-cart  mui-active" v-show="active==='shopping'">
                  <!--调用getters中获取数据的方法-->
-                 <span class="mui-badge iconShow">{{$store.getters.optCount}}</span>
+                 <span class="mui-badge iconShow" v-show="state">{{optCount}}</span>
                  </span>
              <span class="mui-icon mui-icon-extra mui-icon-extra-cart" v-show="active!=='shopping'">
                  <!--调用getters中获取数据的方法-->
-                 <span class="mui-badge">{{$store.getters.optCount}}</span></span>
+                 <span class="mui-badge" v-show="state">{{optCount}}</span></span>
              <span class="mui-tab-label">购物车</span>
          </router-link>
          </div>
@@ -47,16 +47,37 @@
     export default {
         data(){
             return {
-                active:''
+                active:'',//激活
+                state:'',//登录状态
+                optCount:0 //购物车中物品数量
             }
         },
-        mounted(){
+        created(){ //加载页面时执行
             this.ac()
+            this.isLogin()
+        },
+        watch: { //监视页面
+            '$route' () {
+                // router变化时，执行的代码
+                this.ac()
+                this.isLogin()
+            }
         },
         methods:{
             //触发事件，获取路径
             ac(){
                 this.active=this.$route.path.slice(1)
+            },
+            isLogin() {//验证是否登录
+                this.state = this.$store.getters.isLogin //获取vuex中的登录状态
+                var uid =this.$store.getters.uid
+                if(this.state){
+                    this.$http.get("shopCount?uid="+uid)
+                        .then(res=>{
+                            this.$store.commit('shopCart',res.body[0].count) //加载购物车中物品数量
+                            this.optCount=this.$store.getters.optCount
+                        })
+                }
             }
         }
     }

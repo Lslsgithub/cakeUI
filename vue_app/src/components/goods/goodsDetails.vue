@@ -63,7 +63,8 @@
                 /*正在浏览的商品id*/
                 pid: "",
                 /*正在浏览的商品详情*/
-                goods: {}
+                goods: {},
+                timer:""//定时器
             }
         },
         methods: {
@@ -112,11 +113,15 @@
                         })
                 }else{
                     Toast({
-                        message: '您还未登录，无法加入购物车',
+                        message: '您还未登录，无法加入购物车,即将加载登录页面',
                         position: 'center',
-                        duration: 1500
+                        duration: 2000
                     })
-                }
+                    /*跳转登录页面*/
+                        this.timer=setTimeout(()=>{
+                            this.$router.push('/home/Login?path=/home/goodsDetails?pid='+this.pid)
+                        },2000)
+                    }
             },
             /*立即购买*/
             pay() {
@@ -128,6 +133,9 @@
             this.pid = this.$route.query.pid //传入的参数值————商品编号
             this.getImage() //轮播图
             this.getGoods()  //商品详情
+        },
+        destroyed(){ //关闭页面时，关闭定时器
+          clearTimeout(this.timer)
         },
         /*2.注册组件————子组件加入到父组件中*/
         components: {

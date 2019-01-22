@@ -74,6 +74,9 @@ var store=new Vuex.Store({
       loginState(state,uid){ //登录成功修改登录状态,uid
           state.isLogin=true
           state.uid=uid
+      },
+      shopCart(state,c){//加载购物车数量
+          state.count=c
       }
     },
     //获取数据
