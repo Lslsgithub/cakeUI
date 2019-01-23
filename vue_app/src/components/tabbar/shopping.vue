@@ -18,7 +18,8 @@
                     <ul class="mui-table-view">
                         <li class="mui-table-view-cell mui-media" v-for="item in shop">
                             <a href="javascript:;">
-                                <img class="mui-media-object mui-pull-left" :src="item.imgUrl">
+                                <img class="mui-media-object mui-pull-left" :src="item.imgUrl"
+                                     @click="getDetails(item.cid)">
                                 <div class="mui-media-body">
                                     {{item.pname}}
                                     <p class='mui-ellipsis'>
@@ -51,6 +52,7 @@
 <script>
     /*引入子组件*/
     import swiper from "../sub/swiper.vue"
+    /*引入Toast提示框组件*/
     import {Toast} from "mint-ui"
 
     export default {
@@ -58,7 +60,7 @@
             return {
                 list: [],//banner图列表
                 shop: [],//购物车列表
-                timer:"" ,//定时器
+                timer: "",//定时器
             }
         },
         methods: {
@@ -71,51 +73,61 @@
             },
             /*加载购物车*/
             getShopping() {
-                var uid=this.$store.getters.uid //获取uid
+                var uid = this.$store.getters.uid //获取uid
                 this.$http.get("shop?uid=" + uid)
                     .then(res => {
                         this.shop = res.body
                     })
             },
-            updateCart(pid,uid,count){
-                this.$http.get("updateCart?pid="+pid+"&uid="+uid+"&count="+count)
-                    .then(res=>{
-                        if(res.body.code==0){
+            /*点击图片，跳转详情页*/
+            getDetails(cid) {
+                for (var i of this.shop) {
+                    if (cid == i.cid) {
+                        this.$router.push("/home/goodsDetails?pid=" + i.pid)
+                        break
+                    }
+                }
+            },
+            /*修改*/
+            updateCart(pid, uid, count) {
+                this.$http.get("updateCart?pid=" + pid + "&uid=" + uid + "&count=" + count)
+                    .then(res => {
+                        if (res.body.code == 0) {
                             Toast({
-                                message:res.body.msg,
-                                position:'center',
-                                duration:1500
+                                message: res.body.msg,
+                                position: 'center',
+                                duration: 1500
                             })
                             this.getShopping()
-                        } else if(res.body.code==1){
+                        } else if (res.body.code == 1) {
                             return
-                        }else{
+                        } else {
                             Toast({
-                                message:res.body.msg,
-                                position:'center',
-                                duration:1500
+                                message: res.body.msg,
+                                position: 'center',
+                                duration: 1500
                             })
                         }
                     })
             },
             /*数量*/
             goodSub(cid) {
-                var uid=this.$store.getters.uid
+                var uid = this.$store.getters.uid
                 for (var i of this.shop) {
                     if (cid == i.cid) {
-                            i.count--
-                            this.updateCart(i.pid,uid,i.count)
+                        i.count--
+                        this.updateCart(i.pid, uid, i.count)
                         break
                     }
                 }
             },
             goodsAdd(cid) {
-                var uid=this.$store.getters.uid
+                var uid = this.$store.getters.uid
                 for (var i of this.shop) {
                     if (cid == i.cid) {
-                            i.count++
-                        this.updateCart(i.pid,uid,i.count)
-                            break
+                        i.count++
+                        this.updateCart(i.pid, uid, i.count)
+                        break
                     }
                 }
             },
@@ -129,9 +141,9 @@
                         position: 'center',
                         duration: 2000
                     })
-                    this.timer=setTimeout(()=>{
+                    this.timer = setTimeout(() => {
                         this.$router.push('/home/Login?path=/shopping')
-                    },2000)
+                    }, 2000)
                 }
             }
         },
@@ -145,11 +157,17 @@
                 return sum
             }
         },
+        watch: { //监视页面
+            '$route'() {
+                // router变化时，执行的代码
+                this.isLogin()
+            }
+        },
         created() {
             this.getImage()
             this.isLogin()
         },
-        destroyed(){ //关闭页面时，清除定时器
+        destroyed() { //关闭页面时，清除定时器
             clearTimeout(this.timer)
         },
         /*注册子组件*/

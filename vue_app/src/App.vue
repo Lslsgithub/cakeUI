@@ -1,7 +1,11 @@
 <template>
  <div class="app-container">
      <!--顶部导航栏-->
-     <mt-header fixed title="甜心蛋糕" ></mt-header>
+     <mt-header fixed title="甜心蛋糕" >
+         <router-link to="/" slot="left" v-show="path!=='/home'">
+             <mt-button icon="back" @click="back()">返回</mt-button>
+         </router-link>
+     </mt-header>
      <!--显示不同的组件-->
     <router-view></router-view>
      <!--底部导航栏-->
@@ -49,32 +53,40 @@
             return {
                 active:'',//激活
                 state:'',//登录状态
-                optCount:0 //购物车中物品数量
+                optCount:0, //购物车中物品数量
+                path:""
             }
         },
         created(){ //加载页面时执行
             this.ac()
+            this.getPath()
             this.isLogin()
         },
         watch: { //监视页面
             '$route' () {
                 // router变化时，执行的代码
                 this.ac()
+                this.getPath()
                 this.isLogin()
             }
         },
         methods:{
-            //触发事件，获取路径
-            ac(){
+            ac(){//触发事件，获取路径——对比路径，图标激活显示
                 this.active=this.$route.path.slice(1)
             },
-            isLogin() {//验证是否登录
+            getPath(){//获取path，主页不显示返回
+                this.path=this.$route.path
+            },
+            back(){ //返回
+                this.$router.go(-1)
+            },
+            isLogin() {//验证是否登录——购物车商品种类数量
                 this.state = this.$store.getters.isLogin //获取vuex中的登录状态
                 var uid =this.$store.getters.uid
                 if(this.state){
                     this.$http.get("shopCount?uid="+uid)
                         .then(res=>{
-                            this.$store.commit('shopCart',res.body[0].count) //加载购物车中物品数量
+                            this.$store.commit('shopCart',res.body[0].count) //修改购物车中物品种类数量
                             this.optCount=this.$store.getters.optCount
                         })
                 }

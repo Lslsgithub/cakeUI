@@ -15,12 +15,16 @@
             return {
                 uname: "",
                 upwd: "",
-                path: ""
+                path: "",//保存上一页面的path
+                timer:"",//保存定时器
             }
         },
         created() {
             //接收上一个页面的路径
             this.path = this.$route.query.path
+        },
+        destroyed(){ //关闭页面时，停止定时器
+            clearTimeout(this.timer)
         },
         methods: {
             //登录
@@ -47,7 +51,7 @@
                                     })
                                 }else{
                                     Toast({
-                                        message: res.body[1].msg,
+                                        message: res.body[1].msg+"即将打开主页",
                                         duration: 2000
                                     })
                                 }
@@ -58,7 +62,9 @@
                                         this.$router.push(this.path)
                                     }, 2000)
                                 }else{
-                                    return
+                                    this.timer=setTimeout(()=>{
+                                        this.$router.push('/home')
+                                    },2000)
                                 }
                             } else {
                                 Toast(res.body.msg)

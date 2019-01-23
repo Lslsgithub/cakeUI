@@ -54,7 +54,7 @@ Vue.use(Vuex)
 /*3.创建Vuex的实例对象*/
 var store=new Vuex.Store({
     state:{
-        count:0 ,//保存共享数据————购物车中商品的数量
+        count:0 ,//保存共享数据————购物车中商品种类数量
         isLogin:false ,//保存登录状态
         uid:"" //保存用户id
     },
@@ -75,14 +75,14 @@ var store=new Vuex.Store({
           state.isLogin=true
           state.uid=uid
       },
-      shopCart(state,c){//加载购物车数量
+      shopCart(state,c){//加载购物车商品种类数量
           state.count=c
       }
     },
     //获取数据
     getters:{
       optCount(state){
-        return state.count //返回共享的数据——购物车中数量
+        return state.count //返回共享的数据——购物车中商品种类数量
       },
       isLogin(state){
           return state.isLogin //获取登录状态
